@@ -1,0 +1,9 @@
+Building Binexus
+
+See doc/readme-qt.rst for instructions on building Binexus Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of Binexus.
+
+See doc/build-*.txt for instructions on building Binexusd,
+the intended-for-services, no-graphical-interface, reference
+implementation of Binexus.

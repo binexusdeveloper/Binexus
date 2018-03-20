@@ -1,0 +1,2 @@
+debian/bin/Binexusd usr/bin
+src/Binexusd usr/lib/Binexus

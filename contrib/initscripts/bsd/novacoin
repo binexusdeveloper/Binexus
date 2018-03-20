@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: Binexus
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# Binexus_enable (bool): Set to NO by default. Set this variable to YES if you want to enable Binexus service.
+# Binexus_config (path): Set to /usr/local/etc/Binexus.conf by default.
+# Binexus_user:  The user account Binexus daemon runs as. It uses 'root' user by default.
+# Binexus_group: The group account Binexus daemon runs as. It uses 'wheel' group by default.
+# Binexus_datadir (str): Default to "/var/db/Binexus". Base data directory.
+
+. /etc/rc.subr
+
+name=Binexus
+rcvar=Binexus_enable
+
+: ${Binexus_enable:=NO}
+: ${Binexus_config=/usr/local/etc/Binexus.conf}
+: ${Binexus_datadir=/var/db/Binexus}
+: ${Binexus_user="root"}
+: ${Binexus_group="wheel"}
+
+required_files=${Binexus_config}
+command=/usr/local/bin/Binexusd
+Binexus_chdir=${Binexus_datadir}
+pidfile="${Binexus_datadir}/Binexusd.pid"
+stop_cmd=Binexus_stop
+command_args="-conf=${Binexus_config} -datadir=${Binexus_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+Binexus_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${Binexus_datadir}
+	[ $? -eq 0 ] && chown -R ${Binexus_user}:${Binexus_group} ${Binexus_datadir}
+}
+
+Binexus_prestart()
+{
+	if [ ! -d "${Binexus_datadir}/." ]; then
+		Binexus_create_datadir || return 1
+	fi
+}
+
+Binexus_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+Binexus_stop()
+{
+    Binexus_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${Binexus_config} -datadir=${Binexus_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

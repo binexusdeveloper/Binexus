@@ -1,0 +1,5 @@
+Binexus-qt usr/bin
+share/pixmaps/Binexus32.xpm usr/share/pixmaps
+share/pixmaps/Binexus80.xpm usr/share/pixmaps
+debian/Binexus-qt.desktop usr/share/applications
+debian/Binexus-qt.protocol usr/share/kde4/services/

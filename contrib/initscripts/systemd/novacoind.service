@@ -1,0 +1,11 @@
+[Unit]
+Description=Binexus daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=Binexus
+ExecStart=/opt/Binexus/Binexusd
+
+[Install]
+WantedBy=multi-user.target

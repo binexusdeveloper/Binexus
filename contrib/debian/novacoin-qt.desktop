@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Binexus
+Comment=Binexus P2P Cryptocurrency
+Comment[ru]=Binexus, P2P криптовалюта
+Comment[fr]=Binexus, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Binexus, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/Binexus-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/Binexus80.xpm
+MimeType=x-scheme-handler/Binexus;
+Categories=Office;
